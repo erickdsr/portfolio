@@ -1,9 +1,9 @@
 import type { Skill } from '../../types';
 
-function Badge({ name, icon: Icon }: Skill) {
+function Badge({ name, icon: Icon, color }: Skill) {
   return (
     <div className="badge">
-      <Icon size={22} />
+      <Icon size={22} color={color} />
       <span>{name}</span>
     </div>
   );

@@ -6,4 +6,5 @@ export interface Skill {
   name: string;
   icon: IconType;
   category: SkillCategory;
+  color?: string;
 }

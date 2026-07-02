@@ -2,7 +2,7 @@ function Header() {
   return (
     <header className="site-header">
       <a className="brand" href="#home" aria-label="Ir para o início">
-        ES
+        Erick Sousa
       </a>
 
       <nav className="nav-links" aria-label="Navegação principal">

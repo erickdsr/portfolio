@@ -1,0 +1,25 @@
+:root {
+  /* Background */
+  --bg: #0A0A0A;
+  --surface: #171717;
+  --card: #262626;
+
+  /* Primary */
+  --primary: #2563EB;
+  --primary-hover: #1D4ED8;
+
+  /* Text */
+  --text: #FAFAFA;
+  --text-secondary: #A1A1AA;
+
+  /* Border */
+  --border: #2E2E2E;
+
+  /* Radius */
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+
+  /* Transition */
+  --transition: 0.3s ease;
+}

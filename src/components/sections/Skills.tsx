@@ -1,4 +1,4 @@
-import { skills } from "../../data/Skills";
+import { skills } from '../../data/skills';
 import Badge from '../ui/Badge';
 import type { SkillCategory } from '../../types';
 
@@ -16,22 +16,24 @@ function Skills() {
     <section id="skills" className="skills">
       <h2>Skills</h2>
 
-      {categoryOrder.map((category) => {
-        const filteredSkills = skills.filter((skill) => skill.category === category);
+      <div className="skills-groups">
+        {categoryOrder.map((category) => {
+          const filteredSkills = skills.filter((skill) => skill.category === category);
 
-        if (filteredSkills.length === 0) return null;
+          if (filteredSkills.length === 0) return null;
 
-        return (
-          <div key={category} className="skills-group">
-            <h3>{categoryLabels[category]}</h3>
-            <div className="skills-grid">
-              {filteredSkills.map((skill) => (
-                <Badge key={skill.name} {...skill} />
-              ))}
+          return (
+            <div key={category} className="skills-group">
+              <h3>{categoryLabels[category]}</h3>
+              <div className="skills-grid">
+                {filteredSkills.map((skill) => (
+                  <Badge key={skill.name} {...skill} />
+                ))}
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </section>
   );
 }
