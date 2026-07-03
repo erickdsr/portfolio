@@ -377,6 +377,15 @@ main section:nth-child(even) {
   display: grid;
   gap: 1rem;
   min-height: 100%;
+  transition: transform var(--transition), border-color var(--transition), background var(--transition), box-shadow var(--transition);
+}
+
+.project-card:hover,
+.project-card:focus-within {
+  transform: translateY(-3px);
+  border-color: rgba(125, 211, 252, 0.28);
+  background: rgba(255, 255, 255, 0.045);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.16);
 }
 
 .project-card span {
@@ -403,12 +412,16 @@ main section:nth-child(even) {
   font-weight: 600;
   text-decoration: none;
   border-bottom: 1px solid transparent;
-  transition: color var(--transition), transform var(--transition), border-color var(--transition);
+  width: fit-content;
+  transition: color var(--transition), transform var(--transition), border-color var(--transition), text-shadow var(--transition);
 }
 
 .project-card a:hover,
 .project-card a:focus-visible {
   color: #7dd3fc;
+  transform: translateX(4px);
+  border-color: #7dd3fc;
+  text-shadow: 0 0 12px rgba(125, 211, 252, 0.25);
 }
 
 .link-arrow {
@@ -418,7 +431,7 @@ main section:nth-child(even) {
 
 .project-card a:hover .link-arrow,
 .project-card a:focus-visible .link-arrow {
-  transform: translateX(3px);
+  transform: translateX(4px);
 }
 
 .contact-section {
@@ -447,6 +460,15 @@ main section:nth-child(even) {
   border: 1px solid rgba(255, 255, 255, 0.08);
   text-decoration: none;
   color: var(--text);
+  transition: transform var(--transition), border-color var(--transition), background var(--transition), box-shadow var(--transition);
+}
+
+.contact-card:hover,
+.contact-card:focus-visible {
+  transform: translateY(-4px);
+  border-color: rgba(37, 99, 235, 0.45);
+  background: rgba(37, 99, 235, 0.12);
+  box-shadow: 0 16px 40px rgba(37, 99, 235, 0.18);
 }
 
 .contact-card span {
