@@ -3,7 +3,7 @@ function About() {
     <section id="about" className="section">
       <div className="section-heading">
         <p className="section-label">Sobre</p>
-        <h2>Desenvolvedor que entrega soluções com foco em resultado.</h2>
+        <h2>Desenvolvedor com foco em  soluções e resultado.</h2>
       </div>
 
       <div className="about-grid">

@@ -23,7 +23,7 @@ function Hero() {
         <h1>Erick Sousa</h1>
         <h2>Desenvolvedor Full Stack</h2>
         <p>
-          Desenvolvo aplicações web modernas, escaláveis e focadas em performance utilizando <strong>Java</strong>, <strong>Spring Boot</strong>, <strong>React</strong>, <strong>JavaScript</strong>, <strong>TypeScript</strong> e <strong>SQL</strong>.
+          Desenvolvo aplicações web modernas, escaláveis e focadas em performance utilizando <strong>JavaScript</strong>, <strong>TypeScript</strong>, <strong>React</strong>, <strong>Java</strong>, <strong>Spring Boot</strong> e <strong>SQL</strong>.
         </p>
 
         <div className="hero-cta">

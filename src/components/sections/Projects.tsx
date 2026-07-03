@@ -1,9 +1,9 @@
 const projects = [
   {
-    title: 'Sistema de agendamentos',
+    title: 'PROJECTS...',
     description:
-      'Dashboard para organizar horários, clientes e status de atendimentos.',
-    stack: 'React / TypeScript / CSS',
+      'under construction...',
+    stack: 'LANGUAGE / FRAMEWORK / DATABASE',
   },
   {
     title: 'API de gestão',
@@ -12,10 +12,10 @@ const projects = [
     stack: 'Java / Spring Boot / PostgreSQL',
   },
   {
-    title: 'Landing page comercial',
+    title: 'PROJECTS...',
     description:
-      'Página responsiva para apresentar serviços e converter visitantes em contatos.',
-    stack: 'HTML / CSS / JavaScript',
+      'under construction...',
+    stack: 'LANGUAGE / FRAMEWORK / DATABASE',
   },
 ];
 
@@ -24,7 +24,7 @@ function Projects() {
     <section id="projects" className="section">
       <div className="section-heading">
         <p className="section-label">Projetos</p>
-        <h2>Trabalhos em destaque</h2>
+        <h2>Projetos em destaque</h2>
       </div>
 
       <div className="projects-grid">

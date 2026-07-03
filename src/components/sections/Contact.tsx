@@ -5,7 +5,7 @@ function Contact() {
     <section id="contact" className="contact-section section">
       <div className="section-heading">
         <p className="section-label">Contato</p>
-        <h2>Pronto para transformar sua ideia em um produto.</h2>
+        <h2>Conectar, colaborar e construir.</h2>
       </div>
 
       <p className="section-copy">
@@ -19,7 +19,7 @@ function Contact() {
             <FaEnvelope aria-hidden="true" />
             E-mail
           </span>
-          <strong>erick.s0usa@outlook.com</strong>
+          <strong>Enviar e-mail</strong>
         </a>
         <a
           href="https://www.linkedin.com/in/erickdsr/"
@@ -31,7 +31,7 @@ function Contact() {
             <FaLinkedin aria-hidden="true" />
             LinkedIn
           </span>
-          <strong>Conectar no LinkedIn</strong>
+          <strong>Vamos nos conectar</strong>
         </a>
         <a
           href="https://github.com/erickdsr"
@@ -43,7 +43,7 @@ function Contact() {
             <FaGithub aria-hidden="true" />
             GitHub
           </span>
-          <strong>Acessar GitHub</strong>
+          <strong>Explorar repositórios</strong>
         </a>
       </div>
     </section>
