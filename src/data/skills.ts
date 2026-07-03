@@ -32,6 +32,6 @@ export const skills: Skill[] = [
   { name: 'CSS3', icon: SiCss, category: 'frontend', color: '#1572B6' },
 
   { name: 'Git', icon: FaGitAlt, category: 'tools', color: '#F05032' },
-  { name: 'GitHub', icon: SiGithub, category: 'tools', color: '#181717' },
+  { name: 'GitHub', icon: SiGithub, category: 'tools', color: '#e5e7eb' },
   { name: 'Docker', icon: SiDocker, category: 'tools', color: '#2496ED' },
 ];

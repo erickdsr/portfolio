@@ -1,3 +1,5 @@
+import { FaEnvelope, FaLinkedin, FaGithub } from 'react-icons/fa';
+
 function Contact() {
   return (
     <section id="contact" className="contact-section section">
@@ -7,32 +9,41 @@ function Contact() {
       </div>
 
       <p className="section-copy">
-        Substitua estes dados pelos seus canais reais para facilitar o primeiro
-        contato com clareza e confiança.
+        Estou aberto a novas oportunidades, projetos freelancer ou apenas para
+        trocar uma ideia sobre tecnologia. Entre em contato por onde preferir!
       </p>
 
       <div className="contact-grid">
-        <a href="mailto:seuemail@exemplo.com" className="contact-card">
-          <span>E-mail</span>
-          <strong>seuemail@exemplo.com</strong>
+        <a href="mailto:erick.s0usa@outlook.com" className="contact-card">
+          <span className="contact-card-title">
+            <FaEnvelope aria-hidden="true" />
+            E-mail
+          </span>
+          <strong>erick.s0usa@outlook.com</strong>
         </a>
         <a
-          href="https://www.linkedin.com/"
+          href="https://www.linkedin.com/in/erickdsr/"
           target="_blank"
           rel="noreferrer"
           className="contact-card"
         >
-          <span>LinkedIn</span>
-          <strong>linkedin.com/in/seunome</strong>
+          <span className="contact-card-title">
+            <FaLinkedin aria-hidden="true" />
+            LinkedIn
+          </span>
+          <strong>Conectar no LinkedIn</strong>
         </a>
         <a
-          href="https://github.com/"
+          href="https://github.com/erickdsr"
           target="_blank"
           rel="noreferrer"
           className="contact-card"
         >
-          <span>GitHub</span>
-          <strong>github.com/seunome</strong>
+          <span className="contact-card-title">
+            <FaGithub aria-hidden="true" />
+            GitHub
+          </span>
+          <strong>Acessar GitHub</strong>
         </a>
       </div>
     </section>

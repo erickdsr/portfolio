@@ -33,7 +33,10 @@ function Projects() {
             <span>{project.stack}</span>
             <h3>{project.title}</h3>
             <p>{project.description}</p>
-            <a href="#contact">Ver detalhes</a>
+            <a href="#contact">
+              Ver detalhes
+              <span className="link-arrow">→</span>
+            </a>
           </article>
         ))}
       </div>
