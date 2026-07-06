@@ -9,9 +9,13 @@ function About() {
       <div className="about-grid">
         <div className="about-description">
           <p>
-          Sou um Desenvolvedor Full Stack focado em construir sistemas robustos, escaláveis e de alta performance. Unindo o poder e a segurança do ecossistema Java (Spring Boot) no Back-end com a agilidade e interatividade do React no Front-end, meu foco é transformar requisitos complexos em softwares fluidos e intuitivos. Busco constantemente alinhar boas práticas de arquitetura de software, código limpo (Clean Code) e testes automatizados para entregar produtos que resolvam problemas reais e gerem impacto direto nos objetivos do negócio.
-
-Atualmente, estou expandindo minha base teórica e técnica cursando Análise e Desenvolvimento de Sistemas na UNIASSELVI, combinando o aprendizado acadêmico com o desenvolvimento contínuo de projetos práticos.
+          Sou desenvolvedor Full Stack em formação, com foco em Java, Spring Boot, React e TypeScript. Tenho interesse em construir aplicações web bem estruturadas, com código limpo, organização em camadas, integração com banco de dados e boas práticas de desenvolvimento.
+          </p>
+          <p>
+          Atualmente curso Análise e Desenvolvimento de Sistemas na UNIASSELVI e venho desenvolvendo projetos práticos para consolidar meus conhecimentos em Back-end, Front-end, APIs REST, autenticação, banco de dados, Docker e versionamento com Git .
+          </p>
+          <p>
+          Busco evoluir constantemente como desenvolvedor, criando soluções que resolvam problemas reais e entreguem uma boa experiência para o usuário.
           </p>
         </div>
 
@@ -22,7 +26,7 @@ Atualmente, estou expandindo minha base teórica e técnica cursando Análise e 
               <span className="highlight-subtitle"></span>
               <strong>Projetos Desenvolvidos</strong>
             </div>
-            <p>Criação de APIs RESTful estruturadas, aplicações web modernas voltadas para a experiência do usuário.</p>
+            <p>Desenvolvimento de aplicações web, APIs REST e sistemas com foco em aprendizado, organização de código e resolução de problemas reais.</p>
           </div>
           <div className="highlight-card">
             <strong>Qualidade & Arquitetura</strong>
@@ -30,7 +34,7 @@ Atualmente, estou expandindo minha base teórica e técnica cursando Análise e 
           </div>
           <div className="highlight-card">
             <strong>Full Stack</strong>
-            <p>Java, Spring Boot, React, JavaScript, TypeScript, MySQL, PostgreSQL, Docker e controle de versão com Git.</p>
+            <p>Java, Spring Boot, React, TypeScript, JavaScript, PostgreSQL, MySQL, Docker, Git e GitHub.</p>
           </div>
         </div>
       </div>

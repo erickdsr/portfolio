@@ -1,7 +1,27 @@
-import { Link } from 'react-router-dom';
+import { type MouseEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { projects } from '../../data/projects';
 
 function Projects() {
+  const navigate = useNavigate();
+
+  const handleOpenProject = (event: MouseEvent<HTMLAnchorElement>, projectId: string) => {
+    event.preventDefault();
+
+    const rect = event.currentTarget.getBoundingClientRect();
+
+    navigate(`/project/${projectId}`, {
+      state: {
+        originRect: {
+          x: rect.left,
+          y: rect.top,
+          width: rect.width,
+          height: rect.height,
+        },
+      },
+    });
+  };
+
   return (
     <section id="projects" className="section">
       <div className="section-heading">
@@ -15,10 +35,14 @@ function Projects() {
             <span>{project.stack}</span>
             <h3>{project.title}</h3>
             <p>{project.description}</p>
-            <Link to={`/project/${project.id}`} className="project-link">
+            <a
+              href={`/project/${project.id}`}
+              className="project-link"
+              onClick={(event) => handleOpenProject(event, project.id)}
+            >
               Ver detalhes
               <span className="link-arrow">→</span>
-            </Link>
+            </a>
           </article>
         ))}
       </div>
