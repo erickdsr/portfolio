@@ -13,7 +13,7 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: 'Oficina-System',
-    title: 'Oficina-System',
+    title: 'Oficina System',
     description: 'Back-end com autenticação, regras de negócio e documentação de rotas.',
     stack: 'Java / Spring Boot / PostgreSQL',
     longDescription:

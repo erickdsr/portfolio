@@ -27,7 +27,7 @@ function Hero() {
         </p>
 
         <div className="hero-cta">
-          <a href="/curriculo.pdf" className="button button-primary" download>
+          <a href="/Erick_Sousa_CV.pdf" className="button button-primary" download>
             Download CV
           </a>
         </div>
