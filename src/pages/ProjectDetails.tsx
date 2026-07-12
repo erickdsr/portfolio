@@ -40,17 +40,21 @@ function ProjectDetails() {
 
   useEffect(() => {
     if (!project || !transitionState.originRect || prefersReducedMotion) {
-      setAnimationPhase('idle');
       return;
     }
 
-    setAnimationPhase('entering');
+    const frame = window.requestAnimationFrame(() => {
+      setAnimationPhase('entering');
+    });
 
     const timer = window.setTimeout(() => {
       setAnimationPhase('idle');
     }, 240);
 
-    return () => window.clearTimeout(timer);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.clearTimeout(timer);
+    };
   }, [prefersReducedMotion, project, transitionState.originRect]);
 
   const handleBack = () => {
