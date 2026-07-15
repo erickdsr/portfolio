@@ -13,6 +13,11 @@ type TransitionState = {
   };
 };
 
+const repositoryUrls: Record<string, string> = {
+  'Oficina-System': 'https://github.com/erickdsr/oficina-system',
+  portfolio: 'https://github.com/erickdsr/portfolio',
+};
+
 function ProjectDetails() {
   const { id } = useParams();
   const location = useLocation();
@@ -67,6 +72,19 @@ function ProjectDetails() {
 
     window.setTimeout(() => {
       navigate('/', { replace: true, state: { focusProjects: true } });
+    }, 240);
+  };
+
+  const handleContact = () => {
+    if (prefersReducedMotion) {
+      navigate('/', { replace: true, state: { focusContact: true } });
+      return;
+    }
+
+    setAnimationPhase('closing');
+
+    window.setTimeout(() => {
+      navigate('/', { replace: true, state: { focusContact: true } });
     }, 240);
   };
 
@@ -259,15 +277,15 @@ function ProjectDetails() {
             <div className="project-actions">
               <a
                 className="btn btn-primary"
-                href={project.id === 'Oficina-System' ? 'https://github.com/erickdsr/oficina-system' : 'https://github.com/erickdsr/portfolio'}
+                href={repositoryUrls[project.id] ?? 'https://github.com/erickdsr'}
                 target="_blank"
                 rel="noreferrer"
               >
-                Ver Código no GitHub
+                Ver código no GitHub
               </a>
-              <a className="btn btn-secondary" href="#contact" rel="noreferrer">
-                Acessar Documentação
-              </a>
+              <button className="btn btn-secondary" type="button" onClick={handleContact}>
+                Entrar em contato
+              </button>
             </div>
           </div>
         </div>

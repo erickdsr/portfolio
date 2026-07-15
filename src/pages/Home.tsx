@@ -8,18 +8,20 @@ import Contact from '../components/sections/Contact';
 
 type HomeLocationState = {
   focusProjects?: boolean;
+  focusContact?: boolean;
 };
 
 function Home() {
   const location = useLocation();
-  const shouldFocusProjects = (location.state as HomeLocationState | null)?.focusProjects;
+  const state = location.state as HomeLocationState | null;
+  const targetSection = state?.focusProjects ? 'projects' : state?.focusContact ? 'contact' : null;
 
   useEffect(() => {
-    if (!shouldFocusProjects) {
+    if (!targetSection) {
       return;
     }
 
-    const element = document.getElementById('projects');
+    const element = document.getElementById(targetSection);
 
     if (!element) {
       return;
@@ -30,7 +32,7 @@ function Home() {
     });
 
     return () => window.cancelAnimationFrame(frame);
-  }, [shouldFocusProjects]);
+  }, [targetSection]);
 
   return (
     <>

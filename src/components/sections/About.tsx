@@ -3,7 +3,7 @@ function About() {
     <section id="about" className="section">
       <div className="section-heading">
         <p className="section-label">Sobre</p>
-        <h2>Desenvolvedor com foco em  soluções e resultado.</h2>
+        <h2>Desenvolvedor com foco em soluções e resultado.</h2>
       </div>
 
       <div className="about-grid">
@@ -12,7 +12,7 @@ function About() {
           Sou desenvolvedor Full Stack em formação, com foco em Java, Spring Boot, React e TypeScript. Tenho interesse em construir aplicações web bem estruturadas, com código limpo, organização em camadas, integração com banco de dados e boas práticas de desenvolvimento.
           </p>
           <p>
-          Atualmente curso Análise e Desenvolvimento de Sistemas na UNIASSELVI e venho desenvolvendo projetos práticos para consolidar meus conhecimentos em Back-end, Front-end, APIs REST, autenticação, banco de dados, Docker e versionamento com Git .
+          Atualmente curso Análise e Desenvolvimento de Sistemas na UNIASSELVI e venho desenvolvendo projetos práticos para consolidar meus conhecimentos em Back-end, Front-end, APIs REST, autenticação, banco de dados, Docker e versionamento com Git.
           </p>
           <p>
           Busco evoluir constantemente como desenvolvedor, criando soluções que resolvam problemas reais e entreguem uma boa experiência para o usuário.
