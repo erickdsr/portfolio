@@ -507,7 +507,7 @@ main section:nth-child(even) {
 
 .project-details-card {
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  grid-template-columns: 1fr;
   gap: clamp(1.25rem, 4vw, 2rem);
   padding: clamp(1rem, 4vw, 2rem);
   border: 1px solid var(--border);
@@ -560,12 +560,176 @@ main section:nth-child(even) {
   text-transform: uppercase;
 }
 
-.preview-visual {
-  min-height: 160px;
-  height: clamp(160px, 28vw, 220px);
+.project-preview {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, 0.18);
   border-radius: var(--radius-md);
-  background: linear-gradient(120deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02));
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #0b1220;
+  cursor: zoom-in;
+}
+
+.project-preview:focus-visible {
+  outline: 3px solid rgba(96, 165, 250, 0.85);
+  outline-offset: 4px;
+}
+
+.project-preview__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition:
+    transform 300ms ease,
+    filter 300ms ease;
+}
+
+.project-preview__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(5, 12, 28, 0.58);
+  opacity: 0;
+  transition: opacity 250ms ease;
+}
+
+.project-preview__action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  border: 1px solid rgba(96, 165, 250, 0.4);
+  border-radius: 999px;
+  background: rgba(15, 35, 72, 0.9);
+  color: #dbeafe;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transform: translateY(8px);
+  transition: transform 250ms ease;
+}
+
+.project-preview__action svg {
+  flex: 0 0 auto;
+}
+
+.project-preview:hover .project-preview__image,
+.project-preview:focus-visible .project-preview__image {
+  transform: scale(1.025);
+  filter: brightness(0.72);
+}
+
+.project-preview:hover .project-preview__overlay,
+.project-preview:focus-visible .project-preview__overlay {
+  opacity: 1;
+}
+
+.project-preview:hover .project-preview__action,
+.project-preview:focus-visible .project-preview__action {
+  transform: translateY(0);
+}
+
+.preview-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: rgba(2, 6, 23, 0.88);
+  backdrop-filter: blur(10px);
+  animation: previewFadeIn 200ms ease;
+}
+
+.preview-modal__content {
+  position: relative;
+  width: min(1400px, 96vw);
+  max-height: 92vh;
+  overflow: hidden;
+  border: 1px solid rgba(96, 165, 250, 0.3);
+  border-radius: 18px;
+  background: #060d1c;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+}
+
+.preview-modal__image {
+  display: block;
+  width: 100%;
+  max-height: 92vh;
+  object-fit: contain;
+}
+
+.preview-modal__close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.625rem;
+  height: 2.625rem;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 50%;
+  background: rgba(6, 13, 28, 0.85);
+  color: #ffffff;
+  font-size: 1.1rem;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition:
+    background 200ms ease,
+    border-color 200ms ease,
+    transform 200ms ease;
+}
+
+.preview-modal__close:hover,
+.preview-modal__close:focus-visible {
+  border-color: rgba(147, 197, 253, 0.75);
+  background: rgba(37, 99, 235, 0.9);
+  transform: scale(1.04);
+}
+
+.preview-modal__close:focus-visible {
+  outline: 3px solid rgba(96, 165, 250, 0.85);
+  outline-offset: 3px;
+}
+
+@keyframes previewFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .project-preview {
+    aspect-ratio: 16 / 10;
+    border-radius: 14px;
+  }
+
+  .preview-modal {
+    padding: 0.75rem;
+  }
+
+  .preview-modal__content {
+    width: 100%;
+    border-radius: 14px;
+  }
+
+  .preview-modal__close {
+    width: 2.375rem;
+    height: 2.375rem;
+  }
 }
 
 .project-details-header {

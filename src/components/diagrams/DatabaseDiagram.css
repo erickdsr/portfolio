@@ -1,23 +1,23 @@
 .database-diagram {
   --database-bg: rgba(2, 6, 23, 0.72);
-  --database-surface: rgba(15, 23, 42, 0.9);
+  --database-surface: rgba(15, 23, 42, 0.92);
   --database-border: rgba(147, 197, 253, 0.22);
   --database-border-strong: rgba(96, 165, 250, 0.52);
-  --database-line: rgba(148, 163, 184, 0.58);
+  --database-line: rgba(96, 165, 250, 0.55);
   --database-line-active: rgba(96, 165, 250, 0.92);
   --database-text: #f8fafc;
   --database-muted: rgba(226, 232, 240, 0.72);
   --database-accent: #60a5fa;
-  width: 100%;
-}
-
-.database-diagram__canvas {
   position: relative;
-  min-height: 430px;
-  height: clamp(430px, 48vw, 560px);
+  width: 100%;
+  min-width: 650px;
+  min-height: 620px;
+  aspect-ratio: 16 / 10;
   overflow: hidden;
+  box-sizing: border-box;
+  padding: 32px;
   border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: var(--radius-md);
+  border-radius: 20px;
   background:
     linear-gradient(rgba(96, 165, 250, 0.04) 1px, transparent 1px),
     linear-gradient(90deg, rgba(96, 165, 250, 0.04) 1px, transparent 1px),
@@ -36,29 +36,32 @@
   pointer-events: none;
 }
 
-.database-connection line {
+.database-connection path {
+  fill: none;
   stroke: var(--database-line);
-  stroke-width: 1.15;
-  opacity: 0.62;
+  stroke-width: 1.5;
+  opacity: 0.68;
+  vector-effect: non-scaling-stroke;
   transition: opacity 180ms ease, stroke 180ms ease, stroke-width 180ms ease;
 }
 
 .database-connection circle {
-  fill: rgba(2, 6, 23, 0.9);
-  stroke: var(--database-line);
+  fill: #60a5fa;
+  stroke: #bfdbfe;
   stroke-width: 1;
-  opacity: 0.74;
+  opacity: 0.78;
+  vector-effect: non-scaling-stroke;
   transition: opacity 180ms ease, fill 180ms ease, stroke 180ms ease;
 }
 
-.database-connection.is-muted line,
+.database-connection.is-muted path,
 .database-connection.is-muted circle {
   opacity: 0.16;
 }
 
-.database-connection.is-active line {
+.database-connection.is-active path {
   stroke: var(--database-line-active);
-  stroke-width: 1.45;
+  stroke-width: 1.65;
   opacity: 0.95;
 }
 
@@ -72,25 +75,34 @@
   position: absolute;
   left: var(--node-x);
   top: var(--node-y);
-  z-index: 2;
-  display: inline-flex;
+  z-index: 3;
+  display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.48rem;
-  width: clamp(7.1rem, 10vw, 9.6rem);
-  min-height: 3.15rem;
-  padding: 0.72rem 0.82rem;
+  gap: 8px;
+  width: 150px;
+  min-height: 56px;
+  padding: 12px 14px;
+  box-sizing: border-box;
   border: 1px solid var(--database-border);
   border-radius: 14px;
   background: linear-gradient(145deg, rgba(30, 41, 59, 0.94), rgba(15, 23, 42, 0.94));
   box-shadow: 0 14px 28px rgba(2, 6, 23, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.04);
   color: var(--database-text);
   font: inherit;
-  font-size: clamp(0.76rem, 1vw, 0.92rem);
+  font-size: 0.84rem;
   font-weight: 700;
+  white-space: nowrap;
   cursor: default;
   transform: translate(-50%, -50%);
   transition: transform 180ms ease, opacity 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+.database-node[data-node="stock_movements"],
+.database-node[data-node="payment_methods"],
+.database-node[data-node="purchase_items"],
+.database-node[data-node="sale_payments"] {
+  width: 180px;
 }
 
 .database-node:hover,
@@ -107,128 +119,111 @@
 }
 
 .database-node--primary {
-  width: clamp(8.3rem, 12vw, 10.8rem);
-  min-height: 3.65rem;
-  border-color: rgba(96, 165, 250, 0.66);
+  z-index: 4;
+  width: 175px;
+  min-height: 64px;
+  border-color: rgba(96, 165, 250, 0.75);
   background: linear-gradient(145deg, rgba(37, 99, 235, 0.38), rgba(30, 58, 138, 0.38), rgba(15, 23, 42, 0.95));
-  box-shadow: 0 20px 42px rgba(2, 6, 23, 0.36), 0 0 30px rgba(37, 99, 235, 0.18);
-  transform: translate(-50%, -50%) scale(1.05);
+  box-shadow:
+    0 0 0 1px rgba(96, 165, 250, 0.15),
+    0 10px 30px rgba(37, 99, 235, 0.16),
+    0 20px 42px rgba(2, 6, 23, 0.36);
+  transform: translate(-50%, -50%) scale(1.04);
 }
 
 .database-node--primary:hover,
 .database-node--primary:focus-visible {
-  transform: translate(-50%, calc(-50% - 3px)) scale(1.06);
+  transform: translate(-50%, calc(-50% - 3px)) scale(1.05);
 }
 
 .database-node__icon {
   display: inline-flex;
+  flex: 0 0 auto;
   color: var(--database-accent);
   font-size: 0.92rem;
-  flex-shrink: 0;
 }
 
 .database-node__name {
+  display: block;
   min-width: 0;
-  overflow-wrap: anywhere;
-  text-align: center;
-  line-height: 1.15;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1;
 }
 
-.database-node__relations,
-.database-diagram__mobile {
+.database-node__relations {
   display: none;
 }
 
-@media (max-width: 900px) {
-  .database-diagram__canvas {
-    min-height: 380px;
-    height: clamp(380px, 58vw, 500px);
+@media (max-width: 1100px) {
+  .database-diagram {
+    min-height: 560px;
+    padding: 24px;
   }
 
   .database-node {
-    width: clamp(6rem, 12vw, 7.8rem);
-    min-height: 2.75rem;
-    padding: 0.58rem 0.64rem;
-    font-size: 0.72rem;
+    width: 130px;
+    min-height: 50px;
+    padding: 10px;
+    font-size: 0.8rem;
+  }
+
+  .database-node[data-node="stock_movements"],
+  .database-node[data-node="payment_methods"],
+  .database-node[data-node="purchase_items"],
+  .database-node[data-node="sale_payments"] {
+    width: 155px;
   }
 
   .database-node--primary {
-    width: clamp(7.2rem, 14vw, 8.6rem);
-    min-height: 3.1rem;
+    width: 155px;
+    min-height: 58px;
   }
 }
 
-@media (max-width: 650px) {
-  .database-diagram__canvas {
+@media (max-width: 800px) {
+  .database-diagram {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    min-width: 0;
+    min-height: auto;
+    aspect-ratio: auto;
+    padding: 16px;
+  }
+
+  .database-diagram__connections {
     display: none;
   }
 
-  .database-diagram__mobile {
-    display: grid;
-    gap: 1rem;
-  }
-
-  .database-mobile-group {
-    display: grid;
-    gap: 0.7rem;
-    padding: 0.9rem;
-    border: 1px solid rgba(147, 197, 253, 0.14);
-    border-radius: var(--radius-md);
-    background: rgba(2, 6, 23, 0.48);
-  }
-
-  .database-mobile-group h5 {
-    color: #93c5fd;
-    font-size: 0.82rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .database-mobile-group__nodes {
-    display: grid;
-    gap: 0.7rem;
-  }
-
-  .database-mobile-group .database-node {
+  .database-node,
+  .database-node[data-node],
+  .database-node--primary {
     position: static;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    align-items: center;
-    justify-content: flex-start;
     width: 100%;
-    min-height: 0;
-    padding: 0.75rem;
-    text-align: left;
+    min-height: 52px;
     transform: none;
   }
 
-  .database-mobile-group .database-node:hover,
-  .database-mobile-group .database-node:focus-visible,
-  .database-mobile-group .database-node--primary,
-  .database-mobile-group .database-node--primary:hover,
-  .database-mobile-group .database-node--primary:focus-visible {
+  .database-node:hover,
+  .database-node:focus-visible,
+  .database-node--primary:hover,
+  .database-node--primary:focus-visible {
     transform: none;
   }
 
-  .database-mobile-group .database-node__name {
-    text-align: left;
-  }
-
-  .database-mobile-group .database-node__relations {
+  .database-node--primary {
     grid-column: 1 / -1;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    padding-top: 0.3rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .database-diagram {
+    grid-template-columns: 1fr;
   }
 
-  .database-mobile-group .database-node__relations span {
-    padding: 0.24rem 0.48rem;
-    border: 1px solid rgba(96, 165, 250, 0.2);
-    border-radius: 999px;
-    background: rgba(37, 99, 235, 0.12);
-    color: var(--database-muted);
-    font-size: 0.72rem;
-    line-height: 1.2;
+  .database-node--primary {
+    grid-column: auto;
   }
 }

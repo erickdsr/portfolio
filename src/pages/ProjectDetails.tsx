@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState, type CSSProperties } from 'react';
+import { FaExpandAlt, FaTimes } from 'react-icons/fa';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import garageOsLogin from '../assets/projects/garageos-login.png';
 import DatabaseDiagram from '../components/diagrams/DatabaseDiagram';
 import { projects } from '../data/projects';
 
@@ -26,6 +28,7 @@ function ProjectDetails() {
   const [activeTab, setActiveTab] = useState<TabKey>('about');
   const [activeArchitectureTab, setActiveArchitectureTab] = useState<ArchitectureTabKey>('frontend');
   const [animationPhase, setAnimationPhase] = useState<'idle' | 'entering' | 'closing'>('idle');
+  const [previewOpen, setPreviewOpen] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const transitionState = (location.state as TransitionState | null) ?? {};
   const project = projects.find((item) => item.id === id);
@@ -62,6 +65,28 @@ function ProjectDetails() {
       window.clearTimeout(timer);
     };
   }, [prefersReducedMotion, project, transitionState.originRect]);
+
+  useEffect(() => {
+    if (!previewOpen) {
+      return;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setPreviewOpen(false);
+      }
+    };
+
+    const previousOverflow = document.body.style.overflow;
+
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [previewOpen]);
 
   const handleBack = () => {
     if (!project || prefersReducedMotion) {
@@ -232,7 +257,25 @@ function ProjectDetails() {
               <div className="preview-content">
                 <p className="preview-label">Preview do projeto</p>
                 <h3>GarageOS</h3>
-                <div className="preview-visual" />
+                <button
+                  type="button"
+                  className="project-preview"
+                  onClick={() => setPreviewOpen(true)}
+                  aria-label="Abrir preview da tela de login do GarageOS"
+                >
+                  <img
+                    src={garageOsLogin}
+                    alt="Tela de login do sistema GarageOS"
+                    className="project-preview__image"
+                  />
+
+                  <span className="project-preview__overlay" aria-hidden="true">
+                    <span className="project-preview__action">
+                      <FaExpandAlt />
+                      Visualizar projeto
+                    </span>
+                  </span>
+                </button>
               </div>
             </div>
           </div>
@@ -278,6 +321,36 @@ function ProjectDetails() {
             </div>
           </div>
         </div>
+
+        {previewOpen && (
+          <div
+            className="preview-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Preview ampliado do GarageOS"
+            onClick={() => setPreviewOpen(false)}
+          >
+            <div
+              className="preview-modal__content"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <button
+                type="button"
+                className="preview-modal__close"
+                onClick={() => setPreviewOpen(false)}
+                aria-label="Fechar preview"
+              >
+                <FaTimes aria-hidden="true" />
+              </button>
+
+              <img
+                src={garageOsLogin}
+                alt="Tela de login ampliada do sistema GarageOS"
+                className="preview-modal__image"
+              />
+            </div>
+          </div>
+        )}
       </section>
     </div>
   );

@@ -6,10 +6,9 @@ type TableNode = {
   id: string;
   label: string;
   group: string;
-  position: {
-    x: number;
-    y: number;
-  };
+  x: number;
+  y: number;
+  size?: 'wide' | 'primary';
 };
 
 type Relationship = {
@@ -17,21 +16,21 @@ type Relationship = {
   to: string;
 };
 
-const tableNodes: TableNode[] = [
-  { id: 'roles', label: 'roles', group: 'Acesso', position: { x: 10, y: 38 } },
-  { id: 'employees', label: 'employees', group: 'Acesso', position: { x: 23, y: 50 } },
-  { id: 'sale_payments', label: 'sale_payments', group: 'Pagamentos', position: { x: 41, y: 13 } },
-  { id: 'payment_methods', label: 'payment_methods', group: 'Pagamentos', position: { x: 62, y: 13 } },
-  { id: 'sales', label: 'sales', group: 'Vendas', position: { x: 42, y: 34 } },
-  { id: 'clients', label: 'clients', group: 'Vendas', position: { x: 61, y: 34 } },
-  { id: 'products', label: 'products', group: 'Catalogo', position: { x: 52, y: 55 } },
-  { id: 'categories', label: 'categories', group: 'Catalogo', position: { x: 80, y: 31 } },
-  { id: 'stock', label: 'stock', group: 'Estoque', position: { x: 85, y: 55 } },
-  { id: 'suppliers', label: 'suppliers', group: 'Compras', position: { x: 80, y: 77 } },
-  { id: 'stock_movements', label: 'stock_movements', group: 'Estoque', position: { x: 24, y: 80 } },
-  { id: 'purchase_items', label: 'purchase_items', group: 'Compras', position: { x: 49, y: 84 } },
-  { id: 'purchases', label: 'purchases', group: 'Compras', position: { x: 64, y: 80 } },
-  { id: 'sale_items', label: 'sale_items', group: 'Vendas', position: { x: 35, y: 63 } },
+const diagramNodes: TableNode[] = [
+  { id: 'roles', label: 'roles', group: 'Acesso', x: 10, y: 40 },
+  { id: 'employees', label: 'employees', group: 'Acesso', x: 25, y: 52 },
+  { id: 'sale_payments', label: 'sale_payments', group: 'Pagamentos', x: 42, y: 12, size: 'wide' },
+  { id: 'payment_methods', label: 'payment_methods', group: 'Pagamentos', x: 72, y: 12, size: 'wide' },
+  { id: 'sales', label: 'sales', group: 'Vendas', x: 44, y: 34 },
+  { id: 'clients', label: 'clients', group: 'Vendas', x: 72, y: 34 },
+  { id: 'sale_items', label: 'sale_items', group: 'Vendas', x: 30, y: 66 },
+  { id: 'products', label: 'products', group: 'Catalogo', x: 52, y: 56, size: 'primary' },
+  { id: 'categories', label: 'categories', group: 'Catalogo', x: 84, y: 48 },
+  { id: 'stock', label: 'stock', group: 'Estoque', x: 84, y: 66 },
+  { id: 'stock_movements', label: 'stock_movements', group: 'Estoque', x: 15, y: 84, size: 'wide' },
+  { id: 'purchase_items', label: 'purchase_items', group: 'Compras', x: 42, y: 86, size: 'wide' },
+  { id: 'purchases', label: 'purchases', group: 'Compras', x: 66, y: 86 },
+  { id: 'suppliers', label: 'suppliers', group: 'Compras', x: 86, y: 84 },
 ];
 
 const relationships: Relationship[] = [
@@ -53,15 +52,14 @@ const relationships: Relationship[] = [
   { from: 'suppliers', to: 'purchases' },
 ];
 
-const mobileGroups = [
-  { id: 'access', title: 'Acesso', nodes: ['roles', 'employees'] },
-  { id: 'sales-payments', title: 'Vendas e pagamentos', nodes: ['clients', 'sales', 'sale_items', 'sale_payments', 'payment_methods'] },
-  { id: 'catalog-stock', title: 'Catalogo e estoque', nodes: ['categories', 'products', 'stock', 'stock_movements'] },
-  { id: 'purchases', title: 'Compras', nodes: ['suppliers', 'purchases', 'purchase_items'] },
-];
+const nodeById = new Map(diagramNodes.map((node) => [node.id, node]));
+const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
 
-const nodeById = new Map(tableNodes.map((node) => [node.id, node]));
-const connectionOffset = 5.8;
+const nodeDimensions = {
+  default: { width: 15, height: 8.6 },
+  wide: { width: 18, height: 8.6 },
+  primary: { width: 17.5, height: 9.8 },
+};
 
 function getConnectedNodes(nodeId: string) {
   return relationships
@@ -69,19 +67,41 @@ function getConnectedNodes(nodeId: string) {
     .map((relationship) => (relationship.from === nodeId ? relationship.to : relationship.from));
 }
 
-function getConnectionPoint(fromNode: TableNode, toNode: TableNode) {
-  const deltaX = toNode.position.x - fromNode.position.x;
-  const deltaY = toNode.position.y - fromNode.position.y;
-  const length = Math.hypot(deltaX, deltaY);
+function getNodeDimensions(node: TableNode) {
+  return nodeDimensions[node.size ?? 'default'];
+}
 
-  if (length === 0) {
-    return fromNode.position;
+function getConnectionPoint(fromNode: TableNode, toNode: TableNode) {
+  const deltaX = toNode.x - fromNode.x;
+  const deltaY = toNode.y - fromNode.y;
+  const { width, height } = getNodeDimensions(fromNode);
+
+  if (Math.abs(deltaX) > Math.abs(deltaY)) {
+    return {
+      x: fromNode.x + Math.sign(deltaX || 1) * (width / 2),
+      y: clamp(fromNode.y + deltaY * 0.08, fromNode.y - height / 2, fromNode.y + height / 2),
+    };
   }
 
   return {
-    x: fromNode.position.x + (deltaX / length) * connectionOffset,
-    y: fromNode.position.y + (deltaY / length) * connectionOffset,
+    x: clamp(fromNode.x + deltaX * 0.08, fromNode.x - width / 2, fromNode.x + width / 2),
+    y: fromNode.y + Math.sign(deltaY || 1) * (height / 2),
   };
+}
+
+function getRelationshipPath(fromPoint: { x: number; y: number }, toPoint: { x: number; y: number }) {
+  const deltaX = toPoint.x - fromPoint.x;
+  const deltaY = toPoint.y - fromPoint.y;
+
+  if (Math.abs(deltaX) > Math.abs(deltaY)) {
+    const curve = clamp(Math.abs(deltaX) * 0.42, 5, 14);
+
+    return `M ${fromPoint.x} ${fromPoint.y} C ${fromPoint.x + Math.sign(deltaX) * curve} ${fromPoint.y}, ${toPoint.x - Math.sign(deltaX) * curve} ${toPoint.y}, ${toPoint.x} ${toPoint.y}`;
+  }
+
+  const curve = clamp(Math.abs(deltaY) * 0.42, 5, 12);
+
+  return `M ${fromPoint.x} ${fromPoint.y} C ${fromPoint.x} ${fromPoint.y + Math.sign(deltaY) * curve}, ${toPoint.x} ${toPoint.y - Math.sign(deltaY) * curve}, ${toPoint.x} ${toPoint.y}`;
 }
 
 function DatabaseDiagram() {
@@ -104,8 +124,8 @@ function DatabaseDiagram() {
     const isPrimary = node.id === 'products';
     const isDimmed = activeNode !== null && !relatedNodes.has(node.id);
     const style = {
-      '--node-x': `${node.position.x}%`,
-      '--node-y': `${node.position.y}%`,
+      '--node-x': `${clamp(node.x, 10, 90)}%`,
+      '--node-y': `${clamp(node.y, 10, 90)}%`,
     } as CSSProperties;
 
     return (
@@ -114,6 +134,7 @@ function DatabaseDiagram() {
         type="button"
         className={`database-node ${isPrimary ? 'database-node--primary' : ''} ${isDimmed ? 'is-dimmed' : ''}`}
         style={style}
+        data-node={node.id}
         aria-label={`Tabela ${node.label}, grupo ${node.group}`}
         onMouseEnter={() => setActiveNode(node.id)}
         onMouseLeave={() => setActiveNode(null)}
@@ -135,8 +156,7 @@ function DatabaseDiagram() {
 
   return (
     <div className="database-diagram" onMouseLeave={() => setActiveNode(null)}>
-      <div className="database-diagram__canvas" aria-label="Diagrama relacional do banco de dados GarageOS">
-        <svg className="database-diagram__connections" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+      <svg className="database-diagram__connections" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
           {relationships.map((relationship) => {
             const fromNode = nodeById.get(relationship.from);
             const toNode = nodeById.get(relationship.to);
@@ -148,47 +168,22 @@ function DatabaseDiagram() {
             const isActive = isRelationshipActive(relationship);
             const fromPoint = getConnectionPoint(fromNode, toNode);
             const toPoint = getConnectionPoint(toNode, fromNode);
+            const path = getRelationshipPath(fromPoint, toPoint);
 
             return (
               <g
                 key={`${relationship.from}-${relationship.to}`}
                 className={`database-connection ${isActive ? 'is-active' : 'is-muted'}`}
               >
-                <line
-                  x1={fromPoint.x}
-                  y1={fromPoint.y}
-                  x2={toPoint.x}
-                  y2={toPoint.y}
-                  vectorEffect="non-scaling-stroke"
-                />
+                <path d={path} vectorEffect="non-scaling-stroke" />
                 <circle cx={fromPoint.x} cy={fromPoint.y} r="0.75" vectorEffect="non-scaling-stroke" />
                 <circle cx={toPoint.x} cy={toPoint.y} r="0.75" vectorEffect="non-scaling-stroke" />
               </g>
             );
           })}
-        </svg>
+      </svg>
 
-        {tableNodes.map(renderNode)}
-      </div>
-
-      <div className="database-diagram__mobile" aria-label="Relacionamentos do banco de dados GarageOS">
-        {mobileGroups.map((group) => (
-          <section key={group.id} className="database-mobile-group" aria-labelledby={`database-group-${group.id}`}>
-            <h5 id={`database-group-${group.id}`}>{group.title}</h5>
-            <div className="database-mobile-group__nodes">
-              {group.nodes.map((nodeId) => {
-                const node = nodeById.get(nodeId);
-
-                if (!node) {
-                  return null;
-                }
-
-                return renderNode(node);
-              })}
-            </div>
-          </section>
-        ))}
-      </div>
+      {diagramNodes.map(renderNode)}
     </div>
   );
 }
