@@ -14,20 +14,20 @@ export const projects: Project[] = [
   {
     id: 'Oficina-System',
     title: 'Oficina System',
-    description: 'Back-end com autenticação, regras de negócio e documentação de rotas.',
-    stack: 'Java / Spring Boot / PostgreSQL',
+    description: 'Sistema ERP desenvolvido para gestão de distribuidoras de peças automotivas.',
+    stack: 'Java / Spring Boot / React / PostgreSQL',
     longDescription:
-      'API REST para gestão completa de distribuidora de peças automotivas, com autenticação JWT, controle de estoque automatizado e 14 tabelas relacionadas no banco de dados.',
+      'Sistema ERP em desenvolvimento para gestão de distribuidoras de peças automotivas. Desenvolvido com Java, Spring Boot, React com TypeScript e PostgreSQL, utiliza autenticação JWT, Spring Security, JPA/Hibernate, Docker e Swagger. O projeto foi estruturado seguindo arquitetura em camadas, Clean Code e boas práticas para garantir segurança, organização e facilidade de evolução',
     challenge:
-      'Centralizar regras de negócio em um backend confiável, com segurança e rotas bem organizadas.',
+      'Controlar o ciclo completo de uma distribuidora, desde o cadastro de produtos até a movimentação do estoque.',
     solution:
-      'Implementei uma arquitetura modular com Spring Boot, autenticação, tratamento de erros e documentação via Swagger, tornando a API mais segura e fácil de manter.',
+      'Criei uma plataforma Full Stack com autenticação, controle de permissões e gerenciamento integrado de estoque, compras e vendas.',
     highlights: [
       'Autenticação e autorização para acesso controlado.',
       'Estrutura organizada para futuras integrações e expansão.',
       'Documentação de rotas para uso por time e clientes.',
     ],
-    technologies: ['Java', 'Spring Boot', 'PostgreSQL', 'Swagger', 'JWT', 'Spring Security', 'JPA/Hibernate', 'Maven'],
+    technologies: ['Java', 'Spring Boot', 'JPA/Hibernate', 'JWT', 'TypeScript', 'React', 'PostgreSQL', 'Swagger', 'Docker'],
   },
   {
     id: 'portfolio',

@@ -729,7 +729,22 @@ main section:nth-child(even) {
   background: rgba(255, 255, 255, 0.03);
 }
 
-.architecture-preview-card h4 {
+.architecture-diagram-card {
+  display: grid;
+  gap: 0.9rem;
+  padding: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.architecture-diagram-header {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.architecture-preview-card h4,
+.architecture-diagram-card h4 {
   font-size: 1rem;
 }
 
@@ -738,6 +753,25 @@ main section:nth-child(even) {
   border-radius: var(--radius-md);
   border: 1px dashed rgba(255, 255, 255, 0.16);
   background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(255, 255, 255, 0.02));
+}
+
+.architecture-diagram {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  height: clamp(220px, 32vw, 360px);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-md);
+  background: rgba(2, 6, 23, 0.72);
+}
+
+.architecture-diagram img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }
 
 .detail-list {

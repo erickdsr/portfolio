@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import DatabaseDiagram from '../components/diagrams/DatabaseDiagram';
 import { projects } from '../data/projects';
 
 type TabKey = 'about' | 'architecture' | 'highlights';
-type ArchitectureTabKey = 'backend' | 'database' | 'frontend';
+type ArchitectureTabKey = 'frontend' | 'backend' | 'database';
 type TransitionState = {
   originRect?: {
     x: number;
@@ -23,7 +24,7 @@ function ProjectDetails() {
   const location = useLocation();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<TabKey>('about');
-  const [activeArchitectureTab, setActiveArchitectureTab] = useState<ArchitectureTabKey>('backend');
+  const [activeArchitectureTab, setActiveArchitectureTab] = useState<ArchitectureTabKey>('frontend');
   const [animationPhase, setAnimationPhase] = useState<'idle' | 'entering' | 'closing'>('idle');
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const transitionState = (location.state as TransitionState | null) ?? {};
@@ -72,19 +73,6 @@ function ProjectDetails() {
 
     window.setTimeout(() => {
       navigate('/', { replace: true, state: { focusProjects: true } });
-    }, 240);
-  };
-
-  const handleContact = () => {
-    if (prefersReducedMotion) {
-      navigate('/', { replace: true, state: { focusContact: true } });
-      return;
-    }
-
-    setAnimationPhase('closing');
-
-    window.setTimeout(() => {
-      navigate('/', { replace: true, state: { focusContact: true } });
     }, 240);
   };
 
@@ -141,10 +129,14 @@ function ProjectDetails() {
     switch (activeArchitectureTab) {
       case 'database':
         return (
-          <div className="architecture-preview-card">
-            <h4>Diagrama de relacionamento (DER)</h4>
-            <p>Espaço reservado para o modelo relacional do PostgreSQL com tabelas, chaves e relações.</p>
-            <div className="architecture-placeholder" />
+          <div className="architecture-diagram-card">
+            <div className="architecture-diagram-header">
+              <h4>Diagrama de relacionamento (DER)</h4>
+              <p>
+                Estrutura relacional do PostgreSQL organizada por módulos e responsabilidades.
+              </p>
+            </div>
+            <DatabaseDiagram />
           </div>
         );
       case 'frontend':
@@ -171,7 +163,7 @@ function ProjectDetails() {
       case 'architecture':
         return (
           <div className="tab-panel">
-            <h3>Arquitetura em Camadas (Layered)</h3>
+            <h3>Arquitetura do projeto</h3>
             <p>
               A aplicação é estruturada em módulos com separação entre camadas de controle,
               serviço e persistência, facilitando manutenção e evolução.
@@ -179,9 +171,9 @@ function ProjectDetails() {
 
             <div className="architecture-subtabs" role="tablist" aria-label="Subcategorias de arquitetura">
               {[
+                { key: 'frontend', label: 'Frontend' },
                 { key: 'backend', label: 'Backend' },
                 { key: 'database', label: 'Banco de Dados' },
-                { key: 'frontend', label: 'Frontend' },
               ].map((subTab) => (
                 <button
                   key={subTab.key}
@@ -239,8 +231,7 @@ function ProjectDetails() {
               </div>
               <div className="preview-content">
                 <p className="preview-label">Preview do projeto</p>
-                <h3>{project.title}</h3>
-                <p>{project.longDescription}</p>
+                <h3>GarageOS</h3>
                 <div className="preview-visual" />
               </div>
             </div>
@@ -283,9 +274,7 @@ function ProjectDetails() {
               >
                 Ver código no GitHub
               </a>
-              <button className="btn btn-secondary" type="button" onClick={handleContact}>
-                Entrar em contato
-              </button>
+             
             </div>
           </div>
         </div>
