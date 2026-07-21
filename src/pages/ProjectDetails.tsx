@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { FaExpandAlt, FaTimes } from 'react-icons/fa';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import garageOsLogin from '../assets/projects/garageos-login.png';
+import ArchitectureFlowDiagram from '../components/diagrams/ArchitectureFlowDiagram';
 import DatabaseDiagram from '../components/diagrams/DatabaseDiagram';
 import { projects } from '../data/projects';
 
@@ -158,7 +159,7 @@ function ProjectDetails() {
             <div className="architecture-diagram-header">
               <h4>Diagrama de relacionamento (DER)</h4>
               <p>
-                Estrutura relacional do PostgreSQL organizada por módulos e responsabilidades.
+                Estrutura relacional com PostgreSQL, utilizando o DBeaver com gerenciador, organizando por módulos e responsabilidades.
               </p>
             </div>
             <DatabaseDiagram />
@@ -166,18 +167,24 @@ function ProjectDetails() {
         );
       case 'frontend':
         return (
-          <div className="architecture-preview-card">
-            <h4>Estrutura do Frontend</h4>
-            <p>Espaço reservado para a organização das telas, componentes e fluxo de navegação do front.</p>
-            <div className="architecture-placeholder" />
+          <div className="architecture-diagram-card">
+            <div className="architecture-diagram-header">
+              <h4>Arquitetura do Frontend</h4>
+              <p>
+                Interface desenvolvida com React e TypeScript, organizada em páginas, componentes reutilizáveis, gerenciamento de estado e serviços responsáveis pela comunicação com a API REST.
+              </p>
+            </div>
+            <ArchitectureFlowDiagram type="frontend" />
           </div>
         );
       default:
         return (
-          <div className="architecture-preview-card">
-            <h4>Diagrama de arquitetura do Spring Boot</h4>
-            <p>Espaço reservado para o fluxo da API, controllers, services, repositories e integração externa.</p>
-            <div className="architecture-placeholder" />
+          <div className="architecture-diagram-card">
+            <div className="architecture-diagram-header">
+              <h4>Arquitetura do Backend</h4>
+              <p>API REST desenvolvida com Spring Boot, organizada em camadas de controle, serviço e persistência, utilizando DTOs, Spring Data JPA, autenticação JWT e tratamento global de exceções.</p>
+            </div>
+            <ArchitectureFlowDiagram type="backend" />
           </div>
         );
     }

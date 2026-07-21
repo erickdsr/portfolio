@@ -27,7 +27,7 @@ export const projects: Project[] = [
       'Estrutura organizada para futuras integrações e expansão.',
       'Documentação de rotas para uso por time e clientes.',
     ],
-    technologies: ['Java', 'Spring Boot', 'JPA/Hibernate', 'JWT', 'TypeScript', 'React', 'PostgreSQL', 'Swagger', 'Docker'],
+    technologies: ['Java 21', 'Spring Boot', 'Spring Security', 'Spring Data JPA', 'Hibernate', 'JWT', 'Maven', 'React', 'TypeScript', 'Axios', 'PostgreSQL', 'Swagger/OpenAPI', 'Git', 'Docker'],
   },
   {
     id: 'portfolio',
