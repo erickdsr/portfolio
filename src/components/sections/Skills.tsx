@@ -14,7 +14,10 @@ const categoryOrder: SkillCategory[] = ['backend', 'database', 'frontend', 'tool
 function Skills() {
   return (
     <section id="skills" className="skills">
-      <h2 className="skills-title">Skills</h2>
+      <div className="section-heading">
+        <p className="section-label">Tecnologias</p>
+        <h2 className="skills-title">Skills & Ferramentas</h2>
+      </div>
 
       <div className="skills-groups">
         {categoryOrder.map((category) => {

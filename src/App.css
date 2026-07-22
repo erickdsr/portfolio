@@ -612,7 +612,7 @@ main section:nth-child(even) {
 }
 
 .skills-title {
-  margin: 0 0 2rem;
+  margin: 0;
   font-size: clamp(2rem, 3vw, 2.5rem);
   line-height: 1.1;
 }
