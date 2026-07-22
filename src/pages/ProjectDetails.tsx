@@ -1,13 +1,45 @@
 import { useEffect, useMemo, useState, type CSSProperties } from 'react';
-import { FaExpandAlt, FaTimes } from 'react-icons/fa';
+import {
+  FaBoxOpen,
+  FaBolt,
+  FaBuilding,
+  FaChartLine,
+  FaChartPie,
+  FaCheckCircle,
+  FaClipboardCheck,
+  FaCodeBranch,
+  FaCog,
+  FaCubes,
+  FaDatabase,
+  FaDesktop,
+  FaDocker,
+  FaExchangeAlt,
+  FaExpandAlt,
+  FaFileCode,
+  FaGithub,
+  FaKey,
+  FaLayerGroup,
+  FaLock,
+  FaProjectDiagram,
+  FaRoute,
+  FaShieldAlt,
+  FaShoppingCart,
+  FaSitemap,
+  FaStar,
+  FaTimes,
+  FaUsers,
+  FaUserTie,
+} from 'react-icons/fa';
+import type { IconType } from 'react-icons';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import garageOsLogin from '../assets/projects/garageos-login.png';
 import ArchitectureFlowDiagram from '../components/diagrams/ArchitectureFlowDiagram';
 import DatabaseDiagram from '../components/diagrams/DatabaseDiagram';
 import { projects } from '../data/projects';
 
-type TabKey = 'about' | 'architecture' | 'highlights';
+type TabKey = 'architecture' | 'highlights';
 type ArchitectureTabKey = 'frontend' | 'backend' | 'database';
+type HighlightTabKey = 'metrics' | 'features' | 'patterns';
 type TransitionState = {
   originRect?: {
     x: number;
@@ -26,8 +58,9 @@ function ProjectDetails() {
   const { id } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<TabKey>('about');
+  const [activeTab, setActiveTab] = useState<TabKey>('architecture');
   const [activeArchitectureTab, setActiveArchitectureTab] = useState<ArchitectureTabKey>('frontend');
+  const [activeHighlightTab, setActiveHighlightTab] = useState<HighlightTabKey>('metrics');
   const [animationPhase, setAnimationPhase] = useState<'idle' | 'entering' | 'closing'>('idle');
   const [previewOpen, setPreviewOpen] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
@@ -146,9 +179,62 @@ function ProjectDetails() {
   }
 
   const tabs: { key: TabKey; label: string }[] = [
-    { key: 'about', label: 'Sobre' },
     { key: 'architecture', label: 'Arquitetura' },
     { key: 'highlights', label: 'Destaques' },
+  ];
+  const architectureTabs: {
+    key: ArchitectureTabKey;
+    label: string;
+    badge: string;
+    Icon: IconType;
+  }[] = [
+    { key: 'frontend', label: 'Frontend', badge: '7 módulos', Icon: FaDesktop },
+    { key: 'backend', label: 'Backend', badge: '12 módulos', Icon: FaCog },
+    { key: 'database', label: 'Banco de Dados', badge: '14 tabelas', Icon: FaDatabase },
+  ];
+  const activeArchitectureIndex = architectureTabs.findIndex((tab) => tab.key === activeArchitectureTab);
+  const highlightTabs: {
+    key: HighlightTabKey;
+    label: string;
+    badge: string;
+    Icon: IconType;
+  }[] = [
+    { key: 'metrics', label: 'Métricas', badge: '6 indicadores', Icon: FaChartPie },
+    { key: 'features', label: 'Funcionalidades', badge: '10 recursos', Icon: FaBolt },
+    { key: 'patterns', label: 'Padrões Utilizados', badge: '10 práticas', Icon: FaProjectDiagram },
+  ];
+  const activeHighlightIndex = highlightTabs.findIndex((tab) => tab.key === activeHighlightTab);
+  const projectMetrics = [
+    { value: '14', label: 'Tabelas', description: 'Modelo relacional organizado por módulos.', Icon: FaDatabase },
+    { value: '40+', label: 'Endpoints', description: 'API REST cobrindo os fluxos principais.', Icon: FaRoute },
+    { value: '9', label: 'Módulos', description: 'Áreas funcionais separadas por domínio.', Icon: FaCubes },
+    { value: 'JWT', label: 'Segurança', description: 'Autenticação stateless para rotas protegidas.', Icon: FaShieldAlt },
+    { value: 'Docker', label: 'Container', description: 'Ambiente preparado para execução isolada.', Icon: FaDocker },
+    { value: 'REST', label: 'API', description: 'Contrato HTTP claro entre frontend e backend.', Icon: FaExchangeAlt },
+  ];
+  const projectFeatures = [
+    { title: 'Login com JWT', description: 'Autenticação segura com sessão baseada em token.', Icon: FaLock },
+    { title: 'Clientes', description: 'Cadastro e gerenciamento da carteira de clientes.', Icon: FaUsers },
+    { title: 'Fornecedores', description: 'Controle de parceiros e origem dos produtos.', Icon: FaBuilding },
+    { title: 'Produtos', description: 'Catálogo com categorias, preço e dados operacionais.', Icon: FaBoxOpen },
+    { title: 'Estoque', description: 'Acompanhamento de quantidade e movimentações.', Icon: FaChartLine },
+    { title: 'Compras', description: 'Registro de entradas e itens adquiridos.', Icon: FaShoppingCart },
+    { title: 'Vendas', description: 'Fluxo comercial com itens e formas de pagamento.', Icon: FaChartPie },
+    { title: 'Funcionários', description: 'Gestão de usuários internos do sistema.', Icon: FaUserTie },
+    { title: 'Dashboard', description: 'Visão rápida de indicadores operacionais.', Icon: FaChartLine },
+    { title: 'Controle de Permissões', description: 'Perfis de acesso para proteger funcionalidades.', Icon: FaKey },
+  ];
+  const projectPatterns = [
+    { title: 'MVC', description: 'Separa apresentação, regras e dados em responsabilidades claras.', Icon: FaSitemap },
+    { title: 'Arquitetura em Camadas', description: 'Organiza controller, service e repository por função.', Icon: FaLayerGroup },
+    { title: 'DTO Pattern', description: 'Modela entradas e saídas sem expor entidades internas.', Icon: FaExchangeAlt },
+    { title: 'Repository Pattern', description: 'Centraliza o acesso aos dados e desacopla a persistência.', Icon: FaDatabase },
+    { title: 'REST API', description: 'Expõe recursos por rotas HTTP previsíveis e objetivas.', Icon: FaRoute },
+    { title: 'SOLID', description: 'Guia classes mais coesas, extensíveis e fáceis de manter.', Icon: FaCodeBranch },
+    { title: 'Clean Code', description: 'Prioriza nomes claros, baixo acoplamento e leitura simples.', Icon: FaFileCode },
+    { title: 'Tratamento Global de Exceções', description: 'Padroniza erros e respostas da API em um único fluxo.', Icon: FaClipboardCheck },
+    { title: 'Validações', description: 'Protege regras de entrada antes da persistência.', Icon: FaCheckCircle },
+    { title: 'Swagger/OpenAPI', description: 'Documenta endpoints e contratos para consumo da API.', Icon: FaFileCode },
   ];
 
   const renderArchitectureContent = () => {
@@ -159,7 +245,7 @@ function ProjectDetails() {
             <div className="architecture-diagram-header">
               <h4>Diagrama de relacionamento (DER)</h4>
               <p>
-                Estrutura relacional com PostgreSQL, utilizando o DBeaver com gerenciador, organizando por módulos e responsabilidades.
+                Estrutura relacional com PostgreSQL, utilizando o DBeaver como gerenciador, organizando por módulos e responsabilidades.
               </p>
             </div>
             <DatabaseDiagram />
@@ -190,54 +276,170 @@ function ProjectDetails() {
     }
   };
 
-  const renderTabContent = () => {
-    switch (activeTab) {
-      case 'architecture':
+  const renderHighlightsContent = () => {
+    switch (activeHighlightTab) {
+      case 'features':
         return (
-          <div className="tab-panel">
-            <h3>Arquitetura do projeto</h3>
-            <p>
-              A aplicação é estruturada em módulos com separação entre camadas de controle,
-              serviço e persistência, facilitando manutenção e evolução.
-            </p>
-
-            <div className="architecture-subtabs" role="tablist" aria-label="Subcategorias de arquitetura">
-              {[
-                { key: 'frontend', label: 'Frontend' },
-                { key: 'backend', label: 'Backend' },
-                { key: 'database', label: 'Banco de Dados' },
-              ].map((subTab) => (
-                <button
-                  key={subTab.key}
-                  type="button"
-                  className={`architecture-subtab ${activeArchitectureTab === subTab.key ? 'active' : ''}`}
-                  onClick={() => setActiveArchitectureTab(subTab.key as ArchitectureTabKey)}
-                >
-                  {subTab.label}
-                </button>
-              ))}
-            </div>
-
-            {renderArchitectureContent()}
+          <div className="technical-card-grid technical-card-grid--features">
+            {projectFeatures.map(({ title, description, Icon }) => (
+              <article className="technical-card" key={title}>
+                <span className="technical-card__icon" aria-hidden="true">
+                  <Icon />
+                </span>
+                <div>
+                  <h4>{title}</h4>
+                  <p>{description}</p>
+                </div>
+              </article>
+            ))}
           </div>
         );
-      case 'highlights':
+      case 'patterns':
         return (
-          <div className="tab-panel">
-            <h3>Principais diferenciais</h3>
-            <ul className="detail-list">
-              {project.highlights.map((highlight) => (
-                <li key={highlight}>{highlight}</li>
-              ))}
-            </ul>
+          <div className="technical-card-grid technical-card-grid--patterns">
+            {projectPatterns.map(({ title, description, Icon }) => (
+              <article className="technical-card" key={title}>
+                <span className="technical-card__icon" aria-hidden="true">
+                  <Icon />
+                </span>
+                <div>
+                  <h4>{title}</h4>
+                  <p>{description}</p>
+                </div>
+              </article>
+            ))}
           </div>
         );
       default:
         return (
-          <div className="tab-panel">
-            <h3>Desafio e solução</h3>
-            <p>{project.challenge}</p>
-            <p>{project.solution}</p>
+          <div className="metrics-grid">
+            {projectMetrics.map(({ value, label, description, Icon }) => (
+              <article className="metric-card" key={label}>
+                <span className="metric-card__icon" aria-hidden="true">
+                  <Icon />
+                </span>
+                <strong>{value}</strong>
+                <span>{label}</span>
+                <p>{description}</p>
+              </article>
+            ))}
+          </div>
+        );
+    }
+  };
+
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case 'architecture':
+        return (
+          <div className="tab-panel architecture-panel">
+            <div className="architecture-panel__intro">
+              <h3>
+                <FaProjectDiagram aria-hidden="true" />
+                Arquitetura da Aplicação
+              </h3>
+              <p>
+                Explore como o sistema foi organizado em Frontend, Backend e Banco de Dados.
+              </p>
+            </div>
+
+            <div className="architecture-nav-shell">
+              <div
+                className="architecture-subtabs"
+                role="tablist"
+                aria-label="Subcategorias de arquitetura"
+                style={{ '--active-architecture-tab': Math.max(activeArchitectureIndex, 0) } as CSSProperties}
+              >
+                {architectureTabs.map(({ key, label, badge, Icon }) => {
+                  const isActive = activeArchitectureTab === key;
+
+                  return (
+                    <button
+                      key={key}
+                      id={`architecture-tab-${key}`}
+                      type="button"
+                      role="tab"
+                      aria-selected={isActive}
+                      aria-controls={`architecture-panel-${key}`}
+                      className={`architecture-subtab ${isActive ? 'active' : ''}`}
+                      onClick={() => setActiveArchitectureTab(key)}
+                    >
+                      <span className="architecture-subtab__main">
+                        <Icon className="architecture-subtab__icon" aria-hidden="true" />
+                        <span>{label}</span>
+                      </span>
+                      <span className="architecture-subtab__badge">{badge}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div
+              key={activeArchitectureTab}
+              id={`architecture-panel-${activeArchitectureTab}`}
+              className="architecture-content-shell"
+              role="tabpanel"
+              aria-labelledby={`architecture-tab-${activeArchitectureTab}`}
+            >
+              {renderArchitectureContent()}
+            </div>
+          </div>
+        );
+      case 'highlights':
+        return (
+          <div className="tab-panel architecture-panel">
+            <div className="architecture-panel__intro">
+              <h3>
+                <FaStar aria-hidden="true" />
+                Destaques Técnicos
+              </h3>
+              <p>
+                Indicadores, recursos e padrões que demonstram a estrutura profissional do GarageOS.
+              </p>
+            </div>
+
+            <div className="architecture-nav-shell">
+              <div
+                className="architecture-subtabs"
+                role="tablist"
+                aria-label="Categorias de destaques"
+                style={{ '--active-architecture-tab': Math.max(activeHighlightIndex, 0) } as CSSProperties}
+              >
+                {highlightTabs.map(({ key, label, badge, Icon }) => {
+                  const isActive = activeHighlightTab === key;
+
+                  return (
+                    <button
+                      key={key}
+                      id={`highlight-tab-${key}`}
+                      type="button"
+                      role="tab"
+                      aria-selected={isActive}
+                      aria-controls={`highlight-panel-${key}`}
+                      className={`architecture-subtab ${isActive ? 'active' : ''}`}
+                      onClick={() => setActiveHighlightTab(key)}
+                    >
+                      <span className="architecture-subtab__main">
+                        <Icon className="architecture-subtab__icon" aria-hidden="true" />
+                        <span>{label}</span>
+                      </span>
+                      <span className="architecture-subtab__badge">{badge}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div
+              key={activeHighlightTab}
+              id={`highlight-panel-${activeHighlightTab}`}
+              className="architecture-content-shell highlights-content-shell"
+              role="tabpanel"
+              aria-labelledby={`highlight-tab-${activeHighlightTab}`}
+            >
+              {renderHighlightsContent()}
+            </div>
           </div>
         );
     }
@@ -300,32 +502,32 @@ function ProjectDetails() {
               ))}
             </div>
 
-            <div className="tabs" role="tablist" aria-label="Informações do projeto">
-              {tabs.map((tab) => (
-                <button
-                  key={tab.key}
-                  type="button"
-                  className={`tab-button ${activeTab === tab.key ? 'active' : ''}`}
-                  onClick={() => setActiveTab(tab.key)}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
+            <div className="project-primary-nav">
+              <div className="tabs" role="tablist" aria-label="Informações do projeto">
+                {tabs.map((tab) => (
+                  <button
+                    key={tab.key}
+                    type="button"
+                    className={`tab-button ${activeTab === tab.key ? 'active' : ''}`}
+                    onClick={() => setActiveTab(tab.key)}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
+              </div>
 
-            {renderTabContent()}
-
-            <div className="project-actions">
               <a
-                className="btn btn-primary"
+                className="tab-button project-code-link"
                 href={repositoryUrls[project.id] ?? 'https://github.com/erickdsr'}
                 target="_blank"
                 rel="noreferrer"
               >
-                Ver código no GitHub
+                <FaGithub aria-hidden="true" />
+                Ver repositório no GitHub
               </a>
-             
             </div>
+
+            {renderTabContent()}
           </div>
         </div>
 
